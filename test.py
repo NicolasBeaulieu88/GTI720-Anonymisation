@@ -58,7 +58,7 @@ print(k_test_triplets(k_param))
 
 #Algo 25-26
 def l_diversity(adult_df,qid,k,s,l):
-    if(k_anonymity(adult_df,qid,k) == False):
+    if(not k_anonymity(adult_df,qid,k)):
         return False
     else:
         adult_df = adult_df.groupby(qid)[s].nunique()
@@ -78,7 +78,10 @@ print(l_diversity(adult_df,['Sex','Race'],3,'Country',2))
 
 #Q 29
 def generalise(adult_df,qid,n):
-    return adult_df[qid].map(lambda x: str(x)[:-n] + '0' * n)
+    prev = adult_df
+    temp = adult_df[qid].map(lambda x: str(x)[:-n] + '0' * n)
+    prev[qid] = temp
+    return prev
 
 print("Q 29")
-print(generalise(adult_df,'Zip',2).to_frame())
+print(generalise(adult_df,'Zip',2))
